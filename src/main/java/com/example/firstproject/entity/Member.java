@@ -26,4 +26,13 @@ public class Member {
     @Column
     private String password;
 
+    public void patch(Member member) {
+        if(member!=null){
+            this.email = member.email;
+        }
+        if(member!=null){
+            this.password = member.password;
+        }
+    }
+
 }
