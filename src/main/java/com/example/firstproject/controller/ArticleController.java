@@ -18,6 +18,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/*REST API 설계
+ * 1. 조회
+ * GET Article 목록 전체 또는 단일 Article 조회
+ * ==> /api/articles 또는 /api/
+ * 
+ * 2. 생성
+ * POST 새로운 Article 생성 후 목록에 저장
+ * ==> /api/articles
+ * 
+ * 3.수정
+ * PATCH 특정 Article 내용 수정
+ * ==> /api/articles/{id}
+ * 
+ * 4. 삭제
+ * DELETE 특정 Article 삭제
+ * ==> /api/articles/{id}
+ */
+
 @Controller
 //로그 찍는 어노테이션
 @Slf4j
