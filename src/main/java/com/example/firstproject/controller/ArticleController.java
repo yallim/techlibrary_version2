@@ -28,7 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * ==> /api/articles
  * 
  * 3.수정
- * PATCH 특정 Article 내용 수정
+ * PATCH 특정 Article 내용 수정, 일부만 수정
  * ==> /api/articles/{id}
  * 
  * 4. 삭제
