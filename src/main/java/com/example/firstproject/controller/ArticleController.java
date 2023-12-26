@@ -5,14 +5,18 @@ import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
 
 import org.springframework.ui.*;
+
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 //로그 찍는 어노테이션
@@ -38,7 +42,7 @@ public class ArticleController {
         Article saved = articleRepository.save(article);
         log.info(saved.toString());
 
-        return "";
+        return "redirect:/articles/"+saved.getId();
     }
 
     @GetMapping("/articles/{id}")
@@ -67,6 +71,44 @@ public class ArticleController {
         model.addAttribute("articleList", articleEntityList);
         //3. 뷰 페이지 설정
         return "articles/index";
+    }
+
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id, Model model){
+
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+
+        model.addAttribute("article", articleEntity);
+
+        return "articles/edit";
+    }
+
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form){
+        log.info(form.toString());
+
+        Article articleEntity = form.toEntity();
+
+        //기존 데이터 불러오기
+        Article target =articleRepository.findById(articleEntity.getId()).orElse(null);
+
+        //기존 데이터가 있으면, 새로운 데이터를 레포지토리에 저장
+        if(target!=null){
+            articleRepository.save(articleEntity);
+        }
+
+        return "redirect:/articles/" + articleEntity.getId();
+    }
+
+    @GetMapping("/articles/{id}/delete")
+    public String delete(@PathVariable Long id,ArticleForm form, RedirectAttributes rtrr){
+        Article target = articleRepository.findById(id).orElse(null);
+
+        if(target!=null){
+            articleRepository.delete(target);
+            rtrr.addFlashAttribute("msg",target.getId()+"번 아이디가 삭제되었습니다!");
+        }
+        return "redirect:/articles";
     }
 
 }

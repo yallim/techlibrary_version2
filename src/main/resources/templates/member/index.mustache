@@ -9,17 +9,15 @@
     </tr>
     </thead>
     <tbody>
-    {{#member}}
+    {{#memberList}}
         <tr>
-            <th>{{id}}</th>
+            <th><a href="signUp/{{id}}">{{id}}</a></th>
             <td>{{email}}</td>
             <td>{{password}}</td>
         </tr>
-    {{/member}}
+    {{/memberList}}
     </tbody>
 </table>
-<a href="/signUp/{{member.id}}/edit" class = "btn btn-primary">수정</a>
-<a href="/signUp/{{member.id}}/delete" class = "btn btn-danger">삭제</a>
-<a href="/members">Go To List</a>
+<a href="signUp" class="btn btn-primary">새 글 등록</a>
 
 {{>layouts/footer}}

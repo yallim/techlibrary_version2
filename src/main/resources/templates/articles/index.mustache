@@ -12,11 +12,12 @@
     {{#articleList}}
         <tr>
             <th>{{id}}</th>
-            <td>{{title}}</td>
+            <td><a href="articles/{{id}}">{{title}}</a></td>
             <td>{{content}}</td>
         </tr>
     {{/articleList}}
     </tbody>
 </table>
+<a href="articles/new" class="btn btn-primary">새 글 등록</a>
 
 {{>layouts/footer}}
