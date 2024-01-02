@@ -27,10 +27,10 @@ public class Member {
     private String password;
 
     public void patch(Member member) {
-        if(member!=null){
+        if(member.email!=null){
             this.email = member.email;
         }
-        if(member!=null){
+        if(member.password!=null){
             this.password = member.password;
         }
     }
