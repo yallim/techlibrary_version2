@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
@@ -20,6 +21,7 @@ import com.example.firstproject.entity.Member;
 import com.example.firstproject.repository.CoffeeRepository;
 import com.example.firstproject.service.CoffeeService;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -59,15 +61,23 @@ public class CoffeeApiController {
     }
     
 
-    // @DeleteMapping("/api/coffee/{id}")
-    // public ResponseEntity<Coffee> delete(@PathVariable Long id){
-    //     Coffee deleted = coffeeService.delete(id);
-    //     Coffee target = coffeeRepository.findById(id).orElse(null);
-    //     if(target==null){
-    //         ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-    //     }
-    //     coffeeRepository.delete(target);
-        
-    //     return ResponseEntity.status(HttpStatus.OK).build();
-    // }
+    @DeleteMapping("/api/coffee/{id}")
+    public ResponseEntity<Coffee> delete(@PathVariable Long id){
+        Coffee deleted = coffeeService.delete(id);
+
+        return (deleted!=null)?
+             ResponseEntity.status(HttpStatus.OK).build():
+             ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @Transactional
+    @PostMapping("/api/transcation--test")
+    public ResponseEntity<List<Coffee>> transcationtest(@RequestBody List<CoffeeDto> dtos){
+        List<Coffee> transcation_test =coffeeService.createdcoffee(dtos);
+
+        return (transcation_test!=null)?
+             ResponseEntity.status(HttpStatus.OK).build():
+             ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+    }
 }
